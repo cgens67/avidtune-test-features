@@ -16,7 +16,7 @@ val CustomThemeColorKey = stringPreferencesKey("customThemeColor")
 val DarkModeKey = stringPreferencesKey("darkMode")
 val PureBlackKey = booleanPreferencesKey("pureBlack")
 val UseSystemFontKey = booleanPreferencesKey("useSystemFont") // Maintained for fallback/migration
-val AppFontKey = stringPreferencesKey("appFont") // New key for font selection
+val AppFontKey = stringPreferencesKey("appFont") // Key for font selection
 val AppTextSizeKey = stringPreferencesKey("appTextSize")
 val DefaultOpenTabKey = stringPreferencesKey("defaultOpenTab")
 val SlimNavBarKey = booleanPreferencesKey("slimNavBar")
@@ -181,7 +181,6 @@ val AiContentFilterEnabledKey = booleanPreferencesKey("aiContentFilterEnabled")
 val AiContentFilterIncludeModerateKey = booleanPreferencesKey("aiContentFilterIncludeModerate")
 val AiContentFilterLastUpdatedKey = longPreferencesKey("aiContentFilterLastUpdated")
 
-
 val PlayPauseButtonShapeKey = stringPreferencesKey("playPauseButtonShape")
 const val DefaultPlayPauseButtonShape = "Cookie9Sided"
 
@@ -194,6 +193,9 @@ val MiniPlayerStyleKey = stringPreferencesKey("miniPlayerStyle")
 enum class MiniPlayerStyle {
     DEFAULT, APPLE, MODERN
 }
+
+// Custom Home Screen Feed Builder Configuration Key
+val HomeScreenSectionsConfigKey = stringPreferencesKey("homeScreenSectionsConfig")
 
 enum class LibraryViewType {
     LIST,
@@ -345,7 +347,6 @@ enum class PlayerBackgroundStyle {
     APPLE_MUSIC,
     LIVE_MESH,
 }
-
 
 enum class PlayerButtonsStyle {
     DEFAULT,
