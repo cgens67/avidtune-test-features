@@ -40,6 +40,7 @@ import com.cgens67.avidtune.ui.screens.settings.BackupAndRestore
 import com.cgens67.avidtune.ui.screens.settings.ContentSettings
 import com.cgens67.avidtune.ui.screens.settings.DiscordLoginScreen
 import com.cgens67.avidtune.ui.screens.settings.DiscordSettings
+import com.cgens67.avidtune.ui.screens.settings.HomeScreenEditor
 import com.cgens67.avidtune.ui.screens.settings.PalettePickerScreen
 import com.cgens67.avidtune.ui.screens.settings.PerformanceSettings
 import com.cgens67.avidtune.ui.screens.settings.PlayerSettings
@@ -280,6 +281,9 @@ fun NavGraphBuilder.navigationBuilder(
     }
     composable("settings/appearance/theme_creator") {
         ThemeCreatorScreen(navController, scrollBehavior)
+    }
+    composable("settings/home_editor") {
+        HomeScreenEditor(navController = navController)
     }
     composable("settings/account") {
         AccountSettings(navController, scrollBehavior)
