@@ -4,18 +4,12 @@ package com.cgens67.avidtune.ui.screens.settings
 
 import android.content.Context
 import android.os.Build
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,9 +22,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -40,41 +32,29 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -84,30 +64,20 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.edit
 import androidx.navigation.NavController
-import com.cgens67.avidtune.LocalPlayerAwareWindowInsets
 import com.cgens67.avidtune.R
 import com.cgens67.avidtune.constants.AppFont
 import com.cgens67.avidtune.constants.AppFontKey
@@ -115,7 +85,6 @@ import com.cgens67.avidtune.constants.AppTextSize
 import com.cgens67.avidtune.constants.AppTextSizeKey
 import com.cgens67.avidtune.constants.ArtistCanvasProviderOrderKey
 import com.cgens67.avidtune.constants.ChipSortTypeKey
-import com.cgens67.avidtune.constants.CustomThemeColorKey
 import com.cgens67.avidtune.constants.DarkModeKey
 import com.cgens67.avidtune.constants.DefaultOpenTabKey
 import com.cgens67.avidtune.constants.DynamicThemeKey
@@ -145,7 +114,6 @@ import com.cgens67.avidtune.constants.UseSystemFontKey
 import com.cgens67.avidtune.ui.component.AvatarSelector
 import com.cgens67.avidtune.ui.component.DefaultDialog
 import com.cgens67.avidtune.ui.component.EnumListPreference
-import com.cgens67.avidtune.ui.component.IconButton
 import com.cgens67.avidtune.ui.component.LanguagePreference
 import com.cgens67.avidtune.ui.component.ListPreference
 import com.cgens67.avidtune.ui.component.PlayerSliderTrack
@@ -154,22 +122,14 @@ import com.cgens67.avidtune.ui.component.SettingsGeneralCategory
 import com.cgens67.avidtune.ui.component.SettingsPage
 import com.cgens67.avidtune.ui.component.SwitchPreference
 import com.cgens67.avidtune.ui.component.ThumbnailCornerRadiusSelectorButton
-import com.cgens67.avidtune.ui.theme.DefaultThemeColor
-import com.cgens67.avidtune.ui.theme.ThemeSeedPalette
-import com.cgens67.avidtune.ui.theme.ThemeSeedPaletteCodec
 import com.cgens67.avidtune.ui.theme.googleSansBold
 import com.cgens67.avidtune.ui.theme.sfProDisplayBold
 import com.cgens67.avidtune.ui.theme.spaceGroteskBold
-import com.cgens67.avidtune.ui.utils.backToMain
 import com.cgens67.avidtune.utils.dataStore
 import com.cgens67.avidtune.utils.rememberEnumPreference
 import com.cgens67.avidtune.utils.rememberPreference
-import com.google.material.color.hct.Hct
-import com.google.material.color.scheme.SchemeTonalSpot
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.saket.squiggles.SquigglySlider
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -582,6 +542,21 @@ fun AppearanceSettings(
             title = stringResource(R.string.app_language),
             items = listOf(
                 { LanguagePreference() }
+            )
+        )
+
+        // Home Feed customization category
+        SettingsGeneralCategory(
+            title = stringResource(R.string.home),
+            items = listOf(
+                {
+                    PreferenceEntry(
+                        title = { Text("Customize Home Feed") },
+                        description = "Reorder, pin, or hide home feed sections",
+                        icon = { Icon(painterResource(R.drawable.tune), null) },
+                        onClick = { navController.navigate("settings/home_editor") }
+                    )
+                }
             )
         )
 
